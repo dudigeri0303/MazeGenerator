@@ -70,7 +70,7 @@ namespace MazeGenerator
                 {
                     this.gridMap[i, j] = new Grid(this.graphicsDevice, (i + 1) * (width + 4) , (j+1) * (height + 4), width, height, i, j);
 
-                    //Puts the pssible neighrs indexes to the girdsAround list based on the girds location
+                    //Adds the indexes of the the possible neighbours to the girdsAround list based on the girds location
                     if (i == 0 & j == 0)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(0, 1), Tuple.Create(1, 0)};
@@ -144,11 +144,13 @@ namespace MazeGenerator
         //Generates the maze with the Iterative implementation (with stack) of the Randomized depth-first search algorithm
         public void GenerateMaze() 
         {
+            //List for the Grids near the currentgrid baes in the gridsAround list
             List<Grid> neighbours = new List<Grid>();
 
             Grid curretGrid = this.gridStack.Pop();
             Tuple<int, int> indexes = curretGrid.getIndexes();
 
+            //Adds the neighbours to the list (only if it is not visited)
             foreach (var g in curretGrid.getGridsAround())
             {
                 if (this.gridMap[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2].getVisited() == false)
@@ -157,9 +159,9 @@ namespace MazeGenerator
                 }
             }
 
+            //if there is unvisited neighbour
             if (neighbours.Count > 0)
             {
-
                 this.gridStack.Push(curretGrid);
                 Grid previousGrid = curretGrid;
 
@@ -198,47 +200,44 @@ namespace MazeGenerator
         //Solves the maze with the Trémaux's algorithm
         public void solveMaze()
         {
-            if (this.solveStack.Count > 0 & this.finsihGrid.getVisitedCount() == 0)
+            if (this.finsihGrid.getColor() != Color.Yellow) 
             {
-                if (this.finsihGrid.getColor() != Color.Yellow) 
-                {
-                    this.finsihGrid.setColor(Color.Yellow);
-                }
-
-                Grid currentGrid = this.solveStack.Pop();
-                solveStack.Push(currentGrid);
-                currentGrid.setColor(Color.Blue);
-
-                if (currentGrid.getConnectedGrids().Count > 0)
-                {
-                    int randIndex = this.rnd.Next(0, currentGrid.getConnectedGrids().Count);
-
-                    Grid nextGrid = currentGrid.getConnectedGrids().ElementAt(randIndex);
-                    currentGrid.incraseVisitiedCount();
-
-                    nextGrid.getConnectedGrids().Remove(currentGrid);
-                    currentGrid.getConnectedGrids().Remove(nextGrid);
-
-                    currentGrid = nextGrid;
-
-                    this.solveStack.Push(currentGrid);
-                }
-
-                //Go back if hits a dead end
-                else
-                {
-                    currentGrid.setColor(Color.Green);
-                    currentGrid = this.solveStack.Pop();
-                }
-
-                //Checks if the maze is finished
-                if (currentGrid == this.finsihGrid)
-                {
-                    this.solved = true;
-                    this.finsihGrid.setColor(Color.Blue);
-                    return;
-                }
+                this.finsihGrid.setColor(Color.Yellow);
             }
+
+            Grid currentGrid = this.solveStack.Pop();
+            solveStack.Push(currentGrid);
+            currentGrid.setColor(Color.Blue);
+
+            if (currentGrid.getConnectedGrids().Count > 0)
+            {
+                int randIndex = this.rnd.Next(0, currentGrid.getConnectedGrids().Count);
+
+                Grid nextGrid = currentGrid.getConnectedGrids().ElementAt(randIndex);
+                currentGrid.incraseVisitiedCount();
+
+                nextGrid.getConnectedGrids().Remove(currentGrid);
+                currentGrid.getConnectedGrids().Remove(nextGrid);
+
+                currentGrid = nextGrid;
+
+                this.solveStack.Push(currentGrid);
+            }
+
+            //Go back if hits a dead end
+            else
+            {
+                currentGrid.setColor(Color.Green);
+                currentGrid = this.solveStack.Pop();
+            }
+
+            //Checks if the maze is finished
+            if (currentGrid == this.finsihGrid)
+            {
+                this.solved = true;
+                this.finsihGrid.setColor(Color.Blue);
+                return;
+            }   
         }
 
         //Decides to generate or solve the maze (if its already created)
@@ -262,13 +261,12 @@ namespace MazeGenerator
                 {
                     for (int j = 0; j < this.cols; j++)
                     {
-                        if (this.gridMap[i, j].getColor() != Color.Blue) 
+                        if (this.gridMap[i, j].getColor() == Color.Green) 
                         {
                             this.gridMap[i, j].setColor(Color.Red);
                         }
                     }
                 }
-
             }
         }
     }
