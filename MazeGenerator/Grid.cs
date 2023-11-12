@@ -75,7 +75,6 @@ namespace MazeGenerator
         public void drawGrid(SpriteBatch spriteBatch) 
         {
             spriteBatch.Draw(this.texture, this.rect, this.color);
-        
         }
 
         public void addGridToConnectedGrids(Grid grid) 

@@ -209,7 +209,7 @@ namespace MazeGenerator
 
                 currentGrid.setColor(Color.Blue);
 
-                if (currentGrid.getConnectedGrids().Count > 0 )
+                if (currentGrid.getConnectedGrids().Count > 0)
                 {
                     int randIndex = this.rnd.Next(0, currentGrid.getConnectedGrids().Count);
 
