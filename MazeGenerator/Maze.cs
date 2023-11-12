@@ -12,16 +12,22 @@ namespace MazeGenerator
 {
     internal class Maze
     {
+        private GraphicsDevice graphicsDevice;
+
+        private int rows, cols;
+
+        private bool solved;
+
+        private Random rnd;
+
         private Grid[,] gridMap;
         private Grid backgroundGrid;
-        private int rows, cols;
-        private GraphicsDevice graphicsDevice;
-        private Stack<Grid> gridStack;
-        private Random rnd;
+
         private Grid solveStartGrid;
-        private Stack<Grid> solveStack;
-        private bool created = false;
         private Grid finsihGrid;
+
+        private Stack<Grid> gridStack;
+        private Stack<Grid> solveStack;
 
         public Maze(GraphicsDevice graphicsDevice) 
         {
@@ -29,6 +35,8 @@ namespace MazeGenerator
 
             this.rows = 30; 
             this.cols = 30;
+
+            this.solved = false;
 
             this.rnd = new Random();
 
@@ -201,7 +209,7 @@ namespace MazeGenerator
 
                 currentGrid.setColor(Color.Blue);
 
-                if (currentGrid.getConnectedGrids().Count > 0 & currentGrid.getVisitedCount() <= 1)
+                if (currentGrid.getConnectedGrids().Count > 0)
                 {
                     int randIndex = this.rnd.Next(0, currentGrid.getConnectedGrids().Count);
 
@@ -226,11 +234,14 @@ namespace MazeGenerator
 
         public void generateOrSolve()
         {
-            if (this.gridStack.Count > 0)
+            if (this.solved == false) 
             {
-                this.GenerateMaze();
-            }
-            else { this.solveMaze(); }
+                if (this.gridStack.Count > 0)
+                {
+                    this.GenerateMaze();
+                }
+                else { this.solveMaze(); }
+            } 
         }
 
         public void checkSolved() 
@@ -238,6 +249,7 @@ namespace MazeGenerator
 
             if (this.finsihGrid.getVisitedCount() != 0) 
             {
+                this.solved = true;
                 for (int i = 0; i < this.rows; i++)
                 {
                     for (int j = 0; j < this.cols; j++)
@@ -251,7 +263,5 @@ namespace MazeGenerator
 
             }
         }
-
-
     }
 }

@@ -102,7 +102,5 @@ namespace MazeGenerator
         {
             return this.color;
         }
-
-        
     }
 }
