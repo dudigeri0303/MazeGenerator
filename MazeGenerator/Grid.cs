@@ -26,7 +26,7 @@ namespace MazeGenerator
         public Grid(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, int i, int j) 
         {
             this.position = new Vector2((int)x, (int)y);
-            this.color = Color.White;
+            this.color = Color.Black;
             this.width = widht;
             this.heigth = height;
 

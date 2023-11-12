@@ -39,7 +39,7 @@ namespace MazeGenerator
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            this.maze.GenerateMaze();
+            this.maze.generateOrSolve();
             this.maze.checkSolved();
 
             base.Update(gameTime);
