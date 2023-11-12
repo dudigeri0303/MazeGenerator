@@ -43,7 +43,7 @@ namespace MazeGenerator
             this.fillGridMap();
 
 
-            this.gridMap[0, 0].setColor(Color.Blue);
+            this.gridMap[0, 0].setColor(Color.Red);
             this.gridMap[0, 0].setVisited(true);
             this.gridStack.Push(this.gridMap[0, 0]);
 
@@ -138,64 +138,64 @@ namespace MazeGenerator
         {
             List<Grid> neighbours = new List<Grid>();
 
-            if (this.gridStack.Count > 0)
+            Grid curretGrid = this.gridStack.Pop();
+            Tuple<int, int> indexes = curretGrid.getIndexes();
+
+            foreach (var g in curretGrid.getGridsAround())
             {
-
-                Grid curretGrid = this.gridStack.Pop();
-                Tuple<int, int> indexes = curretGrid.getIndexes();
-
-                foreach (var g in curretGrid.getGridsAround())
+                if (this.gridMap[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2].getVisited() == false)
                 {
-                    if (this.gridMap[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2].getVisited() == false)
-                    {
-                        neighbours.Add(this.gridMap[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2]);
-                    }
-                }
-
-                if (neighbours.Count > 0)
-                {
-
-                    this.gridStack.Push(curretGrid);
-                    Grid previousGrid = curretGrid;
-
-                    int randomIndex = this.rnd.Next(0, neighbours.Count);
-                    curretGrid = neighbours[randomIndex];
-                    curretGrid.setVisited(true);
-                    curretGrid.setColor(Color.Red);
-
-                    previousGrid.addGridToConnectedGrids(curretGrid);
-                    curretGrid.addGridToConnectedGrids(previousGrid);
-
-                    if (previousGrid.getIndexes().Item1 > curretGrid.getIndexes().Item1)
-                    {
-                        curretGrid.incraseWidth(4);
-                    }
-
-                    else if (previousGrid.getIndexes().Item1 < curretGrid.getIndexes().Item1)
-                    {
-                        previousGrid.incraseWidth(4);
-                    }
-
-                    else if (previousGrid.getIndexes().Item2 > curretGrid.getIndexes().Item2)
-                    {
-                        curretGrid.incraseHeight(4);
-                    }
-
-                    else if (previousGrid.getIndexes().Item2 < curretGrid.getIndexes().Item2)
-                    {
-                        previousGrid.incraseHeight(4);
-                    }
-                    this.gridStack.Push(curretGrid);
+                    neighbours.Add(this.gridMap[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2]);
                 }
             }
 
-            else  { this.solveMaze(); }
+            if (neighbours.Count > 0)
+            {
+
+                this.gridStack.Push(curretGrid);
+                Grid previousGrid = curretGrid;
+
+                int randomIndex = this.rnd.Next(0, neighbours.Count);
+                curretGrid = neighbours[randomIndex];
+                curretGrid.setVisited(true);
+                curretGrid.setColor(Color.Red);
+
+                previousGrid.addGridToConnectedGrids(curretGrid);
+                curretGrid.addGridToConnectedGrids(previousGrid);
+
+                if (previousGrid.getIndexes().Item1 > curretGrid.getIndexes().Item1)
+                {
+                    curretGrid.incraseWidth(4);
+                }
+
+                else if (previousGrid.getIndexes().Item1 < curretGrid.getIndexes().Item1)
+                {
+                    previousGrid.incraseWidth(4);
+                }
+
+                else if (previousGrid.getIndexes().Item2 > curretGrid.getIndexes().Item2)
+                {
+                    curretGrid.incraseHeight(4);
+                }
+
+                else if (previousGrid.getIndexes().Item2 < curretGrid.getIndexes().Item2)
+                {
+                    previousGrid.incraseHeight(4);
+                }
+                this.gridStack.Push(curretGrid);
+            }
         }
+        
 
         public void solveMaze()
         {
             if (this.solveStack.Count > 0 & this.finsihGrid.getVisitedCount() == 0)
             {
+                if (this.finsihGrid.getColor() != Color.Yellow) 
+                {
+                    this.finsihGrid.setColor(Color.Yellow);
+                }
+
                 Grid currentGrid = this.solveStack.Pop();
                 solveStack.Push(currentGrid);
 
@@ -222,7 +222,15 @@ namespace MazeGenerator
                     currentGrid = this.solveStack.Pop();
                 }
             }
+        }
 
+        public void generateOrSolve()
+        {
+            if (this.gridStack.Count > 0)
+            {
+                this.GenerateMaze();
+            }
+            else { this.solveMaze(); }
         }
 
         public void checkSolved() 
