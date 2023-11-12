@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MazeGenerator
 {
-    internal class Maze
+    public class Maze
     {
         private GraphicsDevice graphicsDevice;
 

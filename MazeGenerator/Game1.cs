@@ -8,8 +8,9 @@ namespace MazeGenerator
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private KeyInputHandler keyInputHandler;
 
-        private Maze maze;
+        public Maze maze;
 
         public Game1()
         {
@@ -33,6 +34,7 @@ namespace MazeGenerator
         {
             spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.maze = new Maze(this.GraphicsDevice);
+            this.keyInputHandler = new KeyInputHandler(this.GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
@@ -40,6 +42,7 @@ namespace MazeGenerator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            this.keyInputHandler.handleKey(this);
             this.maze.checkSolved();
             this.maze.generateOrSolve();
             

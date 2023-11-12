@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MazeGenerator
 {
-    internal class Grid
+    public class Grid
     {
         private Vector2 position;
         private int width, heigth;
