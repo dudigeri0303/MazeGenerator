@@ -11,18 +11,23 @@ namespace MazeGenerator
     public class Generator
     {
         private Random random;
+        private Stack<MazeGrid> gridStack;
 
-        public Generator() 
+        public Generator(MazeGrid grid) 
         {
             this.random = new Random();
+            this.gridStack = new Stack<MazeGrid>();
+            this.gridStack.Push(grid);
         }
+
+        public Stack<MazeGrid> GetGridStack() {  return this.gridStack; }
 
         public void iterativeRandomizedDepthFirstSearch(Maze maze)
         {
             //List for the Grids near the currentgrid baes in the gridsAround list
             List<MazeGrid> neighbours = new List<MazeGrid>();
 
-            MazeGrid curretGrid = maze.getGridStack().Pop();
+            MazeGrid curretGrid = this.gridStack.Pop();
             Tuple<int, int> indexes = curretGrid.getIndexes();
 
             //Adds the neighbours to the list (only if it is not visited)
@@ -37,7 +42,7 @@ namespace MazeGenerator
             //if there is unvisited neighbour
             if (neighbours.Count > 0)
             {
-                maze.getGridStack().Push(curretGrid);
+                this.gridStack.Push(curretGrid);
                 MazeGrid previousGrid = curretGrid;
 
                 int randomIndex = this.random.Next(0, neighbours.Count);
@@ -68,7 +73,13 @@ namespace MazeGenerator
                 {
                     previousGrid.incraseHeight(4);
                 }
-                maze.getGridStack().Push(curretGrid);
+                this.gridStack.Push(curretGrid);
+            }
+
+            if (this.gridStack.Count == 0) 
+            {
+                maze.setGenerating(false);
+                maze.setGenerated(true);
             }
         }
     }

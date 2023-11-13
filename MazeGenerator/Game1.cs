@@ -10,6 +10,11 @@ namespace MazeGenerator
         private SpriteBatch spriteBatch;
         private KeyInputHandler keyInputHandler;
 
+        private GenerateButton generateButton;
+        private SolveButton solveButton;
+
+        private MouseHandler mouseHandler;
+
         public Maze maze;
 
         public Game1()
@@ -33,8 +38,15 @@ namespace MazeGenerator
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(this.GraphicsDevice);
+
             this.maze = new Maze(this.GraphicsDevice);
+
             this.keyInputHandler = new KeyInputHandler(this.GraphicsDevice);
+
+            this.mouseHandler = new MouseHandler();
+
+            this.generateButton = new GenerateButton(this.GraphicsDevice, 720, 10, 100, 50, this.mouseHandler, this.maze);
+            this.solveButton = new SolveButton(this.GraphicsDevice, 720, 100, 100, 50, this.mouseHandler, this.maze);
         }
 
         protected override void Update(GameTime gameTime)
@@ -43,6 +55,11 @@ namespace MazeGenerator
                 Exit();
 
             this.keyInputHandler.handleKey(this);
+
+            this.mouseHandler.setMouseStae();
+            this.generateButton.act();
+            this.solveButton.act();
+
             this.maze.checkSolved();
             this.maze.generateOrSolve();
             
@@ -57,6 +74,9 @@ namespace MazeGenerator
             this.spriteBatch.Begin();
 
             this.maze.drawMaze(spriteBatch);
+
+            this.generateButton.drawGrid(spriteBatch);
+            this.solveButton.drawGrid(spriteBatch);
 
             this.spriteBatch.End();
 

@@ -19,10 +19,6 @@ namespace MazeGenerator
             this.indexes = Tuple.Create(i, j);
             this.connectedGrids = new List<MazeGrid>();
         }
-        public void setColor(Color color) 
-        {
-            this.color = color;
-        }
 
         public Tuple<int, int>[] getGridsAround() 
         {

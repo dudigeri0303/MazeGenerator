@@ -12,21 +12,16 @@ namespace MazeGenerator
 
         private int rows, cols;
 
-        private bool generating = true;
+        private bool generating = false;
         private bool solving = false;
         private bool generated = false;
         private bool solved = false;
 
-        private Random rnd;
-
         private MazeGrid[,] gridMap;
-        private MazeGrid backgroundGrid;
+        private BackgroundGrid backgroundGrid;
 
-        private MazeGrid solveStartGrid;
+        private MazeGrid startGrid;
         private MazeGrid finsihGrid;
-
-        private Stack<MazeGrid> gridStack { get; set; }
-        private Stack<MazeGrid> solveStack;
 
         private Generator generator;
         private Solver solver;
@@ -35,37 +30,24 @@ namespace MazeGenerator
         {
             this.graphicsDevice = graphicsDevice;
 
-            this.rows = 30; 
+            this.rows = 30;
             this.cols = 30;
 
-            this.generator = new Generator();
-            this.solver = new Solver();
-
-            this.backgroundGrid = new MazeGrid(this.graphicsDevice, 12, 12, 680, 680, 0, 0);
+            this.backgroundGrid = new BackgroundGrid(this.graphicsDevice, 12, 12, 680, 680);
             this.backgroundGrid.setColor(Color.Black);
-
-            this.gridStack = new Stack<MazeGrid>();
-            this.solveStack = new Stack<MazeGrid>();
-      
 
             this.gridMap = new MazeGrid[this.rows, this.cols];
             this.fillGridMap();
 
-
-            this.gridMap[0, 0].setColor(Color.Red);
-            this.gridMap[0, 0].setVisited(true);
-            this.gridStack.Push(this.gridMap[0, 0]);
-
-            this.solveStartGrid = this.gridMap[0, 0];
-            this.solveStack.Push(this.solveStartGrid);
-
+            this.startGrid = this.gridMap[0, 0];
+            this.startGrid.setColor(Color.Red);
+            this.startGrid.setVisited(true);
             this.finsihGrid = this.gridMap[rows - 1, cols - 1];
+
+            this.generator = new Generator(this.startGrid);
+            this.solver = new Solver(startGrid);
         }
 
-        public Stack<MazeGrid> getGridStack() 
-        {
-            return this.gridStack;
-        }
 
         public MazeGrid[,] getGridMap() 
         {
@@ -77,20 +59,31 @@ namespace MazeGenerator
             return this.finsihGrid;
         }
 
-        public Stack<MazeGrid> getSolveStack() 
-        {
-            return this.solveStack;
-        }
-
         public bool getSolved() 
         {
             return this.solved;
         }
 
-        public void setSolved(bool bolean) 
+        public void setGenerating(bool bolean) 
+        {
+            this.generating = bolean;
+        }
+
+        public void setGenerated(bool bolean) 
+        {
+            this.generated = bolean;
+        }
+
+        public void setSolving(bool bolean) 
+        {
+            this.solving = bolean;
+        }
+
+        public void setSolved(bool bolean)
         {
             this.solved = bolean;
         }
+
 
         //Creates the girdmap
         private void fillGridMap() 
@@ -179,14 +172,14 @@ namespace MazeGenerator
         //Decides to generate or solve the maze (if its already created)
         public void generateOrSolve()
         {
-            if (this.solved == false) 
+            if (this.generating == true & this.generated == false)
             {
-                if (this.gridStack.Count > 0)
-                {
-                    this.generator.iterativeRandomizedDepthFirstSearch(this);
-                }
-                else { this.solver.Tremauxs(this); }
-            } 
+                this.generator.iterativeRandomizedDepthFirstSearch(this);
+            }
+            else if (this.solving == true & this.generated == true & this.solved == false) 
+            {
+                this.solver.Tremauxs(this);
+            }
         }
 
         public void checkSolved() 

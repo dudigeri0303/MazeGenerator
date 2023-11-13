@@ -33,6 +33,11 @@ namespace MazeGenerator
             return this.color;
         }
 
+        public void setColor(Color color)
+        {
+            this.color = color;
+        }
+
         public void incraseWidth(int width)
         {
             this.width += width;

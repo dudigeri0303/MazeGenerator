@@ -11,10 +11,13 @@ namespace MazeGenerator
     public class Solver
     {
         private Random random;
+        private Stack<MazeGrid> solveStack;
 
-        public Solver() 
+        public Solver(MazeGrid grid) 
         {
             this.random = new Random();
+            this.solveStack = new Stack<MazeGrid>();
+            this.solveStack.Push(grid);
         }
 
         public void Tremauxs(Maze maze) 
@@ -24,8 +27,8 @@ namespace MazeGenerator
                 maze.getFinishGrid().setColor(Color.Yellow);
             }
 
-            MazeGrid currentGrid = maze.getSolveStack().Pop();
-            maze.getSolveStack().Push(currentGrid);
+            MazeGrid currentGrid = this.solveStack.Pop();
+            this.solveStack.Push(currentGrid);
             currentGrid.setColor(Color.Blue);
 
             if (currentGrid.getConnectedGrids().Count > 0)
@@ -40,19 +43,20 @@ namespace MazeGenerator
 
                 currentGrid = nextGrid;
 
-                maze.getSolveStack().Push(currentGrid);
+                this.solveStack.Push(currentGrid);
             }
 
             //Go back if hits a dead end
             else
             {
                 currentGrid.setColor(Color.Green);
-                currentGrid = maze.getSolveStack().Pop();
+                currentGrid = this.solveStack.Pop();
             }
 
             //Checks if the maze is finished
             if (currentGrid == maze.getFinishGrid())
             {
+                maze.setSolving(false);
                 maze.setSolved(true);
                 maze.getFinishGrid().setColor(Color.Blue);
                 return;
