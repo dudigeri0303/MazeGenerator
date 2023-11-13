@@ -18,7 +18,11 @@ namespace MazeGenerator
 
         protected override void onClick()
         {
-            this.maze.setSolving(true);
+            if (this.maze.getGenerated())
+            {
+                this.maze.setSolving(true);
+            }
+            
         }
     }
 }

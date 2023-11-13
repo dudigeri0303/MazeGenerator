@@ -18,7 +18,7 @@ namespace MazeGenerator
 
         protected bool isClicked() 
         {
-            if (this.rect.Contains(this.mouseHandler.getMousePosition()))
+            if (this.rect.Contains(this.mouseHandler.getMousePosition()) & this.mouseHandler.getClicked())
             {
                 return true;
             }
@@ -29,7 +29,7 @@ namespace MazeGenerator
 
         public void act() 
         {
-            if (this.isClicked()) 
+            if (this.isClicked() ) 
             {
                 this.onClick();
             }

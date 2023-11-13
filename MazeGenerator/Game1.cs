@@ -62,7 +62,6 @@ namespace MazeGenerator
 
             this.maze.checkSolved();
             this.maze.generateOrSolve();
-            
 
             base.Update(gameTime);
         }

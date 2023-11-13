@@ -64,6 +64,11 @@ namespace MazeGenerator
             return this.solved;
         }
 
+        public bool getGenerated() 
+        {
+            return this.generated;
+        }
+
         public void setGenerating(bool bolean) 
         {
             this.generating = bolean;
