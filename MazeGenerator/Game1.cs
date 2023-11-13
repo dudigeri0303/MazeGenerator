@@ -15,7 +15,7 @@ namespace MazeGenerator
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 700;
+            graphics.PreferredBackBufferWidth = 900;
             graphics.PreferredBackBufferHeight = 700;
 
             graphics.ApplyChanges();
