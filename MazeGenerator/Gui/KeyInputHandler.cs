@@ -11,13 +11,12 @@ namespace MazeGenerator
     public class KeyInputHandler
     {
         private bool rKeyBool;
-        private GraphicsDevice graphicsDevice;
         private KeyboardState keybordState;
 
-        public KeyInputHandler(GraphicsDevice graphicsDevice)
+        public KeyInputHandler()
         {
             this.rKeyBool = false;
-            this.graphicsDevice = graphicsDevice;
+
         }
 
         private void isKeysDown()
@@ -40,7 +39,7 @@ namespace MazeGenerator
         {
             if (this.rKeyBool == true)
             {
-                game.maze = new Maze(this.graphicsDevice);
+               
             }
         }
 

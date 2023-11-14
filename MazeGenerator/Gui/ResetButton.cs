@@ -9,17 +9,14 @@ namespace MazeGenerator.Gui
 {
     internal class ResetButton : Button
     {
-        private Maze maze;
-
-        public ResetButton(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, MouseHandler mouseHandler, Maze maze) : base(graphicsDevice, x, y, widht, height, mouseHandler)
+        public ResetButton(int x, int y, int widht, int height, MouseHandler mouseHandler) : base(x, y, widht, height, mouseHandler)
         {
-            this.maze = maze;
             this.text = "Reset";
         }
 
         protected override void onClick()
         {
-            this.maze.resetMaze();
+            Maze.getInstance().resetMaze();
         }
     }
 }

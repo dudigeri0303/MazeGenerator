@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,15 @@ namespace MazeGenerator
 {
     public class Maze
     {
-        private GraphicsDevice graphicsDevice;
+        private static Maze instance;
+        public static Maze getInstance() 
+        {
+            if (instance == null) 
+            {
+                instance = new Maze();
+            }
+            return instance;
+        }
 
         private int rows, cols;
 
@@ -23,17 +32,16 @@ namespace MazeGenerator
         private MazeGrid startGrid;
         private MazeGrid finsihGrid;
 
-        private Generator generator;
-        private Solver solver;
+        private IGenerator generator;
+        private ISolver solver;
 
-        public Maze(GraphicsDevice graphicsDevice) 
+        private Maze() 
         {
-            this.graphicsDevice = graphicsDevice;
 
             this.rows = 30;
             this.cols = 30;
 
-            this.backgroundGrid = new BackgroundGrid(this.graphicsDevice, 12, 12, 680, 680);
+            this.backgroundGrid = new BackgroundGrid(12, 12, 680, 680);
             this.backgroundGrid.setColor(Color.Black);
 
             this.gridMap = new MazeGrid[this.rows, this.cols];
@@ -44,8 +52,8 @@ namespace MazeGenerator
             this.startGrid.setVisited(true);
             this.finsihGrid = this.gridMap[rows - 1, cols - 1];
 
-            this.generator = new Generator(this.startGrid);
-            this.solver = new Solver(this.startGrid);
+            this.generator = new IterativeRandomizedDFS(this.startGrid);
+            this.solver = new Tremaux(this.startGrid);
         }
 
 
@@ -89,6 +97,11 @@ namespace MazeGenerator
             this.solved = bolean;
         }
 
+        public MazeGrid getStartGrid() 
+        {
+            return this.startGrid;
+        }
+
 
         //Creates the girdmap
         private void fillGridMap() 
@@ -97,7 +110,7 @@ namespace MazeGenerator
             {
                 for (int j = 0; j < this.cols; j++) 
                 {
-                    this.gridMap[i, j] = new MazeGrid(this.graphicsDevice, (i + 1) * (Game1.mazeGridWidth + Game1.mazeGridMargin) , (j+1) * (Game1.mazeGridHeight + Game1.mazeGridMargin), Game1.mazeGridWidth, Game1.mazeGridHeight, i, j);
+                    this.gridMap[i, j] = new MazeGrid((i + 1) * (Game1.mazeGridWidth + Game1.mazeGridMargin) , (j+1) * (Game1.mazeGridHeight + Game1.mazeGridMargin), Game1.mazeGridWidth, Game1.mazeGridHeight, i, j);
 
                     //Adds the indexes of the the possible neighbours to the girdsAround list based on the girds location
                     if (i == 0 & j == 0)
@@ -175,11 +188,11 @@ namespace MazeGenerator
         {
             if (this.generating == true & this.generated == false)
             {
-                this.generator.iterativeRandomizedDepthFirstSearch(this);
+                this.generator.generate();
             }
             else if (this.solving == true & this.generated == true & this.solved == false) 
             {
-                this.solver.Tremauxs(this);
+                this.solver.solve();
             }
         }
 
@@ -203,8 +216,8 @@ namespace MazeGenerator
             this.startGrid.setVisited(false);
             this.finsihGrid = this.gridMap[rows - 1, cols - 1];
 
-            this.generator.reset(startGrid);
-            this.solver.reset(startGrid);
+            this.generator.reset();
+            this.solver.reset();
         }
 
         public void checkSolved() 

@@ -6,30 +6,30 @@ using System.Linq;
 
 namespace MazeGenerator
 {
-    public class Solver
+    public class Tremaux : ISolver
     {
         private Random random;
         private Stack<MazeGrid> solveStack;
 
-        public Solver(MazeGrid grid) 
+        public Tremaux(MazeGrid grid) 
         {
             this.random = new Random();
             this.solveStack = new Stack<MazeGrid>();
             this.solveStack.Push(grid);
         }
 
-        public void reset(MazeGrid grid) 
+        public void reset() 
         {
             this.solveStack.Clear();
-            this.solveStack.Push(grid);
+            this.solveStack.Push(Maze.getInstance().getStartGrid());
         
         }
 
-        public void Tremauxs(Maze maze) 
+        public void solve() 
         {
-            if (maze.getFinishGrid().getColor() != Color.Yellow)
+            if (Maze.getInstance().getFinishGrid().getColor() != Color.Yellow)
             {
-                maze.getFinishGrid().setColor(Color.Yellow);
+                Maze.getInstance().getFinishGrid().setColor(Color.Yellow);
             }
 
             MazeGrid currentGrid = this.solveStack.Pop();
@@ -59,11 +59,11 @@ namespace MazeGenerator
             }
 
             //Checks if the maze is finished
-            if (currentGrid == maze.getFinishGrid())
+            if (currentGrid == Maze.getInstance().getFinishGrid())
             {
-                maze.setSolving(false);
-                maze.setSolved(true);
-                maze.getFinishGrid().setColor(Color.Blue);
+                Maze.getInstance().setSolving(false);
+                Maze.getInstance().setSolved(true);
+                Maze.getInstance().getFinishGrid().setColor(Color.Blue);
                 return;
             }
         }

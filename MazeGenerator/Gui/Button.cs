@@ -14,7 +14,7 @@ namespace MazeGenerator
         protected MouseHandler mouseHandler;
         protected string text;
 
-        public Button(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, MouseHandler mouseHandler) : base(graphicsDevice, x, y, widht, height)
+        public Button(int x, int y, int widht, int height, MouseHandler mouseHandler) : base(x, y, widht, height)
         {
             this.mouseHandler = mouseHandler;
         }

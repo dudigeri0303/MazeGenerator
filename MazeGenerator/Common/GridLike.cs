@@ -16,7 +16,7 @@ namespace MazeGenerator
         protected Color color;
         protected Rectangle rect;
 
-        public GridLike(GraphicsDevice graphicsDevice, int x, int y, int widht, int height) 
+        public GridLike(int x, int y, int widht, int height) 
         {
             this.position = new Vector2((int)x, (int)y);
             this.color = Color.Black;
@@ -24,7 +24,7 @@ namespace MazeGenerator
             this.heigth = height;
 
             this.rect = new Rectangle((int)this.position.X, (int)this.position.Y, this.width, this.heigth);
-            this.texture = new Texture2D(graphicsDevice, 1, 1);
+            this.texture = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
             this.texture.SetData(new[] { Color.White });
         }
 

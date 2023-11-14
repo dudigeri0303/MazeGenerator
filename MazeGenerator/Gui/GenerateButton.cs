@@ -9,17 +9,14 @@ namespace MazeGenerator
 {
     internal class GenerateButton : Button
     {
-        private Maze maze;
-
-        public GenerateButton(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, MouseHandler mouseHandler, Maze maze) : base(graphicsDevice, x, y, widht, height, mouseHandler)
+        public GenerateButton(int x, int y, int widht, int height, MouseHandler mouseHandler) : base(x, y, widht, height, mouseHandler)
         {
-            this.maze = maze;
             this.text = "Generate";
         }
 
         protected override void onClick()
         {
-            this.maze.setGenerating(true);
+            Maze.getInstance().setGenerating(true);
         }
     }
 }

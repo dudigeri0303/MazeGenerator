@@ -8,17 +8,14 @@ namespace MazeGenerator
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private KeyInputHandler keyInputHandler;
 
         private GenerateButton generateButton;
         private SolveButton solveButton;
         private ResetButton resetButton;
 
         private MouseHandler mouseHandler;
-
-        public Maze maze;
 
         public static SpriteFont font;
         public static int mazeGridWidth = 18;
@@ -51,16 +48,11 @@ namespace MazeGenerator
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             font = Content.Load<SpriteFont>("basicFont");
 
-
-            this.maze = new Maze(this.GraphicsDevice);
-
-            this.keyInputHandler = new KeyInputHandler(this.GraphicsDevice);
-
             this.mouseHandler = new MouseHandler();
 
-            this.generateButton = new GenerateButton(this.GraphicsDevice, 720, 10, 100, 50, this.mouseHandler, this.maze);
-            this.solveButton = new SolveButton(this.GraphicsDevice, 720, 100, 100, 50, this.mouseHandler, this.maze);
-            this.resetButton = new ResetButton(this.GraphicsDevice, 720, 190, 100, 50, this.mouseHandler, this.maze);
+            this.generateButton = new GenerateButton(720, 10, 100, 50, this.mouseHandler);
+            this.solveButton = new SolveButton(720, 100, 100, 50, this.mouseHandler);
+            this.resetButton = new ResetButton(720, 190, 100, 50, this.mouseHandler);
         }
 
         protected override void Update(GameTime gameTime)
@@ -68,16 +60,14 @@ namespace MazeGenerator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            this.keyInputHandler.handleKey(this);
-
             this.mouseHandler.setMouseStae();
 
             this.generateButton.act();
             this.solveButton.act();
             this.resetButton.act();
-            
-            this.maze.checkSolved();
-            this.maze.generateOrSolve();
+
+            Maze.getInstance().checkSolved();
+            Maze.getInstance().generateOrSolve();
 
             base.Update(gameTime);
         }
@@ -88,7 +78,7 @@ namespace MazeGenerator
 
             this.spriteBatch.Begin();
 
-            this.maze.drawMaze(this.spriteBatch);
+            Maze.getInstance().drawMaze(this.spriteBatch);
 
             this.generateButton.drawGrid(this.spriteBatch);
             this.solveButton.drawGrid(this.spriteBatch);

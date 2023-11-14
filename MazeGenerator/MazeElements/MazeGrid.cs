@@ -14,7 +14,7 @@ namespace MazeGenerator
         private Tuple<int, int>[] gridsAround;
         private List<MazeGrid> connectedGrids; 
 
-        public MazeGrid(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, int i, int j) : base(graphicsDevice, x, y, widht, height)
+        public MazeGrid(int x, int y, int widht, int height, int i, int j) : base(x, y, widht, height)
         {
             this.indexes = Tuple.Create(i, j);
             this.connectedGrids = new List<MazeGrid>();

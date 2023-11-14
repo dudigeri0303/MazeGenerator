@@ -8,27 +8,18 @@ using System.Threading.Tasks;
 
 namespace MazeGenerator
 {
-    public class Generator
+    public class IterativeRandomizedDFS : IGenerator
     {
         private Random random;
         private Stack<MazeGrid> gridStack;
 
-        public Generator(MazeGrid grid) 
+        public IterativeRandomizedDFS(MazeGrid grid) 
         {
             this.random = new Random();
             this.gridStack = new Stack<MazeGrid>();
             this.gridStack.Push(grid);
         }
-
-        public void reset(MazeGrid grid) 
-        {
-            this.gridStack.Clear();
-            this.gridStack.Push(grid);
-        }
-
-        public Stack<MazeGrid> GetGridStack() {  return this.gridStack; }
-
-        public void iterativeRandomizedDepthFirstSearch(Maze maze)
+        public void generate()
         {
             //List for the Grids near the currentgrid baes in the gridsAround list
             List<MazeGrid> neighbours = new List<MazeGrid>();
@@ -39,9 +30,9 @@ namespace MazeGenerator
             //Adds the neighbours to the list (only if it is not visited)
             foreach (var g in curretGrid.getGridsAround())
             {
-                if (maze.getGridMap()[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2].getVisited() == false)
+                if (Maze.getInstance().getGridMap()[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2].getVisited() == false)
                 {
-                    neighbours.Add(maze.getGridMap()[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2]);
+                    neighbours.Add(Maze.getInstance().getGridMap()[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2]);
                 }
             }
 
@@ -82,11 +73,20 @@ namespace MazeGenerator
                 this.gridStack.Push(curretGrid);
             }
 
-            if (this.gridStack.Count == 0) 
+            if (this.gridStack.Count == 0)
             {
-                maze.setGenerating(false);
-                maze.setGenerated(true);
+                Maze.getInstance().setGenerating(false);
+                Maze.getInstance().setGenerated(true);
             }
         }
+
+        public void reset()
+        {
+            this.gridStack.Clear();
+            this.gridStack.Push(Maze.getInstance().getStartGrid());
+        }
+
+        public Stack<MazeGrid> GetGridStack() { return this.gridStack; }
+
     }
 }
