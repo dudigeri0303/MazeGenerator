@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Net.Mime;
 
 namespace MazeGenerator
 {
@@ -21,6 +20,8 @@ namespace MazeGenerator
         public static int mazeGridWidth = 18;
         public static int mazeGridHeight = 18;
         public static int mazeGridMargin = 4;
+        public static int rows = 30;
+        public static int cols = 30;
 
 
         public Game1()

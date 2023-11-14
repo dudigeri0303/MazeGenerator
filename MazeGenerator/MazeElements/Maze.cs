@@ -16,7 +16,6 @@ namespace MazeGenerator
             return instance;
         }
 
-        private int rows, cols;
 
         private bool generating = false;
         private bool solving = false;
@@ -34,20 +33,16 @@ namespace MazeGenerator
 
         private Maze() 
         {
-
-            this.rows = 30;
-            this.cols = 30;
-
             this.backgroundGrid = new BackgroundGrid(12, 12, 680, 680);
             this.backgroundGrid.setColor(Color.Black);
 
-            this.gridMap = new MazeGrid[this.rows, this.cols];
+            this.gridMap = new MazeGrid[Game1.rows, Game1.cols];
             this.fillGridMap();
 
             this.startGrid = this.gridMap[0, 0];
             this.startGrid.setColor(Color.Red);
             this.startGrid.setVisited(true);
-            this.finsihGrid = this.gridMap[rows - 1, cols - 1];
+            this.finsihGrid = this.gridMap[Game1.rows - 1, Game1.cols - 1];
 
             this.generator = new IterativeRandomizedDFS(this.startGrid);
             this.solver = new Tremaux(this.startGrid);
@@ -103,9 +98,9 @@ namespace MazeGenerator
         //Creates the girdmap
         private void fillGridMap() 
         {
-            for (int i = 0; i < this.rows; i++) 
+            for (int i = 0; i < Game1.rows; i++) 
             {
-                for (int j = 0; j < this.cols; j++) 
+                for (int j = 0; j < Game1.cols; j++) 
                 {
                     this.gridMap[i, j] = new MazeGrid((i + 1) * (Game1.mazeGridWidth + Game1.mazeGridMargin) , (j+1) * (Game1.mazeGridHeight + Game1.mazeGridMargin), Game1.mazeGridWidth, Game1.mazeGridHeight, i, j);
 
@@ -116,49 +111,49 @@ namespace MazeGenerator
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (j == 0 & i > 0 & i < this.rows - 1)
+                    else if (j == 0 & i > 0 & i < Game1.rows - 1)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(0, 1), Tuple.Create(1, 0), Tuple.Create(-1, 0) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (i == this.rows - 1 & j == 0)
+                    else if (i == Game1.rows - 1 & j == 0)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(-1, 0), Tuple.Create(0, 1) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (i == this.rows - 1 & j > 0 & j < this.cols - 1)
+                    else if (i == Game1.rows - 1 & j > 0 & j < Game1.cols - 1)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(0, 1), Tuple.Create(0, -1), Tuple.Create(-1, 0) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (i == this.rows - 1 & j == this.cols - 1)
+                    else if (i == Game1.rows - 1 & j == Game1.cols - 1)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(0, -1), Tuple.Create(-1, 0) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (j == this.cols - 1 & i > 0 & i < this.rows - 1)
+                    else if (j == Game1.cols - 1 & i > 0 & i < Game1.rows - 1)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(1, 0), Tuple.Create(0, -1), Tuple.Create(-1, 0) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (i == 0 & j == this.cols - 1)
+                    else if (i == 0 & j == Game1.cols - 1)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(1, 0), Tuple.Create(0, -1) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (i == 0 & j > 0 & j < this.cols - 1)
+                    else if (i == 0 & j > 0 & j < Game1.cols - 1)
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(0, 1), Tuple.Create(1, 0), Tuple.Create(0, -1) };
                         this.gridMap[i, j].setGridsAround(neighbours);
                     }
 
-                    else if (i > 0 & i < this.rows -1 & j > 0 & j < this.cols-1 )
+                    else if (i > 0 & i < Game1.rows - 1 & j > 0 & j < Game1.cols - 1 )
                     {
                         Tuple<int, int>[] neighbours = new Tuple<int, int>[] { Tuple.Create(0, 1), Tuple.Create(1, 0), Tuple.Create(0, -1), Tuple.Create(-1, 0)};
                         this.gridMap[i, j].setGridsAround(neighbours);
@@ -171,9 +166,9 @@ namespace MazeGenerator
         {
             this.backgroundGrid.drawGrid(spriteBatch);
 
-            for (int i = 0; i < this.rows; i++)
+            for (int i = 0; i < Game1.rows; i++)
             {
-                for (int j = 0; j < this.cols; j++)
+                for (int j = 0; j < Game1.cols; j++)
                 {
                     this.gridMap[i, j].drawGrid(spriteBatch);
                 }
@@ -195,9 +190,9 @@ namespace MazeGenerator
 
         public void resetMaze()
         {
-            for (int i = 0; i < this.rows; i++)
+            for (int i = 0; i < Game1.rows; i++)
             {
-                for (int j = 0; j < this.cols; j++)
+                for (int j = 0; j < Game1.cols; j++)
                 {
                     this.gridMap[i, j].reset();
 
@@ -211,7 +206,7 @@ namespace MazeGenerator
             this.startGrid = this.gridMap[0, 0];
             this.startGrid.setColor(Color.Red);
             this.startGrid.setVisited(false);
-            this.finsihGrid = this.gridMap[rows - 1, cols - 1];
+            this.finsihGrid = this.gridMap[Game1.rows - 1, Game1.cols - 1];
 
             this.generator.reset();
             this.solver.reset();
@@ -221,9 +216,9 @@ namespace MazeGenerator
         { 
             if (this.solved == true) 
             {
-                for (int i = 0; i < this.rows; i++)
+                for (int i = 0; i < Game1.rows; i++)
                 {
-                    for (int j = 0; j < this.cols; j++)
+                    for (int j = 0; j < Game1.cols; j++)
                     {
                         if (this.gridMap[i, j].getColor() == Color.Green) 
                         {
