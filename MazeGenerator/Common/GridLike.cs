@@ -50,10 +50,9 @@ namespace MazeGenerator
             this.rect = new Rectangle((int)this.position.X, (int)this.position.Y, this.width, this.heigth);
         }
 
-        public void drawGrid(SpriteBatch spriteBatch)
+        public virtual void drawGrid(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.texture, this.rect, this.color);
         }
-
     }
 }

@@ -20,6 +20,12 @@ namespace MazeGenerator
             this.gridStack.Push(grid);
         }
 
+        public void reset(MazeGrid grid) 
+        {
+            this.gridStack.Clear();
+            this.gridStack.Push(grid);
+        }
+
         public Stack<MazeGrid> GetGridStack() {  return this.gridStack; }
 
         public void iterativeRandomizedDepthFirstSearch(Maze maze)
@@ -56,22 +62,22 @@ namespace MazeGenerator
                 //Inscreses the size of the correct grid to give the illusion of deleting the walll between them
                 if (previousGrid.getIndexes().Item1 > curretGrid.getIndexes().Item1)
                 {
-                    curretGrid.incraseWidth(4);
+                    curretGrid.incraseWidth(Game1.mazeGridMargin);
                 }
 
                 else if (previousGrid.getIndexes().Item1 < curretGrid.getIndexes().Item1)
                 {
-                    previousGrid.incraseWidth(4);
+                    previousGrid.incraseWidth(Game1.mazeGridMargin);
                 }
 
                 else if (previousGrid.getIndexes().Item2 > curretGrid.getIndexes().Item2)
                 {
-                    curretGrid.incraseHeight(4);
+                    curretGrid.incraseHeight(Game1.mazeGridMargin);
                 }
 
                 else if (previousGrid.getIndexes().Item2 < curretGrid.getIndexes().Item2)
                 {
-                    previousGrid.incraseHeight(4);
+                    previousGrid.incraseHeight(Game1.mazeGridMargin);
                 }
                 this.gridStack.Push(curretGrid);
             }

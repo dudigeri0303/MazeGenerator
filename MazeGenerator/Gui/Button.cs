@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace MazeGenerator
     {
 
         protected MouseHandler mouseHandler;
+        protected string text;
+
         public Button(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, MouseHandler mouseHandler) : base(graphicsDevice, x, y, widht, height)
         {
             this.mouseHandler = mouseHandler;
@@ -33,6 +36,13 @@ namespace MazeGenerator
             {
                 this.onClick();
             }
+        }
+
+        public override void drawGrid(SpriteBatch spriteBatch)
+        {
+            base.drawGrid(spriteBatch);
+            spriteBatch.DrawString(Game1.font, this.text, new Vector2(this.position.X, this.position.Y), Color.White);
+
         }
     }
 }

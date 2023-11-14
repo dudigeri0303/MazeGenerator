@@ -1,10 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MazeGenerator
 {
@@ -18,6 +16,13 @@ namespace MazeGenerator
             this.random = new Random();
             this.solveStack = new Stack<MazeGrid>();
             this.solveStack.Push(grid);
+        }
+
+        public void reset(MazeGrid grid) 
+        {
+            this.solveStack.Clear();
+            this.solveStack.Push(grid);
+        
         }
 
         public void Tremauxs(Maze maze) 

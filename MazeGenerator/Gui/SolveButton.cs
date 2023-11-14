@@ -14,6 +14,7 @@ namespace MazeGenerator
         public SolveButton(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, MouseHandler mouseHandler, Maze maze) : base(graphicsDevice, x, y, widht, height, mouseHandler)
         {
             this.maze = maze;
+            this.text = "Solve";
         }
 
         protected override void onClick()

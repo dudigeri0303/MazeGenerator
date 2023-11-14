@@ -10,8 +10,8 @@ namespace MazeGenerator
         private bool visited = false;
         private int visitedCount = 0;
 
-        private Tuple<int, int>[] gridsAround;
         private Tuple<int, int> indexes;
+        private Tuple<int, int>[] gridsAround;
         private List<MazeGrid> connectedGrids; 
 
         public MazeGrid(GraphicsDevice graphicsDevice, int x, int y, int widht, int height, int i, int j) : base(graphicsDevice, x, y, widht, height)
@@ -62,6 +62,18 @@ namespace MazeGenerator
         public void incraseVisitiedCount() 
         {
             this.visitedCount++;
+        }
+
+        public void reset() 
+        {
+            this.color = Color.Black;
+            this.width = Game1.mazeGridWidth;
+            this.heigth = Game1.mazeGridHeight;
+            this.rect = new Rectangle((int)this.position.X, (int)this.position.Y, this.width, this.heigth);
+
+            this.visited = false;
+            this.visitedCount = 0;
+            this.connectedGrids.Clear();
         }
     }
 }

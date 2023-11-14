@@ -45,7 +45,7 @@ namespace MazeGenerator
             this.finsihGrid = this.gridMap[rows - 1, cols - 1];
 
             this.generator = new Generator(this.startGrid);
-            this.solver = new Solver(startGrid);
+            this.solver = new Solver(this.startGrid);
         }
 
 
@@ -93,15 +93,11 @@ namespace MazeGenerator
         //Creates the girdmap
         private void fillGridMap() 
         {
-            //The hight and width of a grid
-            int width = 18;
-            int height = 18;
-
             for (int i = 0; i < this.rows; i++) 
             {
                 for (int j = 0; j < this.cols; j++) 
                 {
-                    this.gridMap[i, j] = new MazeGrid(this.graphicsDevice, (i + 1) * (width + 4) , (j+1) * (height + 4), width, height, i, j);
+                    this.gridMap[i, j] = new MazeGrid(this.graphicsDevice, (i + 1) * (Game1.mazeGridWidth + Game1.mazeGridMargin) , (j+1) * (Game1.mazeGridHeight + Game1.mazeGridMargin), Game1.mazeGridWidth, Game1.mazeGridHeight, i, j);
 
                     //Adds the indexes of the the possible neighbours to the girdsAround list based on the girds location
                     if (i == 0 & j == 0)
@@ -185,6 +181,30 @@ namespace MazeGenerator
             {
                 this.solver.Tremauxs(this);
             }
+        }
+
+        public void resetMaze()
+        {
+            for (int i = 0; i < this.rows; i++)
+            {
+                for (int j = 0; j < this.cols; j++)
+                {
+                    this.gridMap[i, j].reset();
+
+                }
+            }
+            this.generating = false;
+            this.solving = false;
+            this.generated = false;
+            this.solved = false;
+
+            this.startGrid = this.gridMap[0, 0];
+            this.startGrid.setColor(Color.Red);
+            this.startGrid.setVisited(false);
+            this.finsihGrid = this.gridMap[rows - 1, cols - 1];
+
+            this.generator.reset(startGrid);
+            this.solver.reset(startGrid);
         }
 
         public void checkSolved() 
