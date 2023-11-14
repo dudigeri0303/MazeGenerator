@@ -1,6 +1,6 @@
 2023.11.14:  
 Basic Gui elements added for easy controlls. Codebase greatly refactored for future expansions.  
-< img src="ScreenShots/Updated.png">  
+<img src="ScreenShots/Updated.png">  
 
 2023.11.11:  
 Maze generator and solver program made with c# and monogame.  
