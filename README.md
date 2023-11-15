@@ -1,5 +1,5 @@
 2023.11.15:  
-Generating and solveing algorithm chooser added to the gui. New generating algorithm implemented.  
+Generating and solving algorithm chooser added to the gui. New generating algorithm implemented.  
 Some refactoring.  
 <img src="ScreenShots/Updated2.png" width="550" height="350">  
 
