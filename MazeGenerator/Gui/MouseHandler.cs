@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeGenerator
 {
@@ -27,9 +22,10 @@ namespace MazeGenerator
         public void setMouseStae() 
         {
             var mouseState = Mouse.GetState();
+            this.mousePositione = new Point(mouseState.X, mouseState.Y);
+
             if (mouseState.LeftButton == ButtonState.Pressed) 
             {
-                this.mousePositione = new Point(mouseState.X, mouseState.Y);
                 this.clicked = true;
             }
             else { this.clicked = false; }

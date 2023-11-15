@@ -45,7 +45,7 @@ namespace MazeGenerator
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-            this.gui = new Gui();
+            this.gui = new Gui(Maze.getInstance().getAlgorithmChooser());
 
             font = Content.Load<SpriteFont>("basicFont");
         }

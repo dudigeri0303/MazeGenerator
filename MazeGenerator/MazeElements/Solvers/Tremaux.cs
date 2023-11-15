@@ -64,8 +64,13 @@ namespace MazeGenerator
                 Maze.getInstance().setSolving(false);
                 Maze.getInstance().setSolved(true);
                 Maze.getInstance().getFinishGrid().setColor(Color.Blue);
+                this.reset();
                 return;
             }
+        }
+        public string getName()
+        {
+            return "Tremaux's";
         }
     }
 }

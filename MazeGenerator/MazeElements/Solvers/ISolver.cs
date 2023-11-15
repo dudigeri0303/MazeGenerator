@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeGenerator
 {
-    public interface ISolver
+    public interface ISolver : IAlgorithmName
     {
         void solve();
         void reset();

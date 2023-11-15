@@ -48,7 +48,6 @@ namespace MazeGenerator
             this.algorithmChooser = new AlgorithmChooser(this.startGrid);    
         }
 
-
         public MazeGrid[,] getGridMap() 
         {
             return this.gridMap;
@@ -92,6 +91,21 @@ namespace MazeGenerator
         public MazeGrid getStartGrid() 
         {
             return this.startGrid;
+        }
+
+        public AlgorithmChooser getAlgorithmChooser() 
+        {
+            return this.algorithmChooser;
+        }
+
+        public bool getGenerating() 
+        {
+            return this.generating;
+        }
+
+        public bool getSolving() 
+        {
+            return this.solving;
         }
 
 

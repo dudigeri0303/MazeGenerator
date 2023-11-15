@@ -72,6 +72,7 @@ namespace MazeGenerator
             {
                 Maze.getInstance().setGenerating(false);
                 Maze.getInstance().setGenerated(true);
+                this.reset();
             }
         }
 
@@ -83,5 +84,9 @@ namespace MazeGenerator
 
         public Stack<MazeGrid> GetGridStack() { return this.gridStack; }
 
+        public string getName()
+        {
+            return "IterativeRndDFS";
+        }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MazeGenerator
 {
-    public interface IGenerator : IAlgorithmName
+    public interface IAlgorithmName
     {
-        void generate();
-        void reset();
+        string getName();
     }
 }

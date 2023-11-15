@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeGenerator
 {
@@ -25,14 +20,28 @@ namespace MazeGenerator
             {
                 return true;
             }
+
             return false;
+        }
+
+        protected void colorChangeBasedOnMousePos() 
+        {
+            if (this.rect.Contains(this.mouseHandler.getMousePosition()) & this.getColor() != Color.DarkGray)
+            {
+                this.setColor(Color.DarkGray);
+            }
+            else if (!this.rect.Contains(this.mouseHandler.getMousePosition()) & this.getColor() != Color.Black)
+            {
+                this.setColor(Color.Black);
+            }
         }
 
         protected abstract void onClick();
 
         public void act() 
         {
-            if (this.isClicked() ) 
+            this.colorChangeBasedOnMousePos();
+            if (this.isClicked()) 
             {
                 this.onClick();
             }
@@ -42,7 +51,6 @@ namespace MazeGenerator
         {
             base.draw(spriteBatch);
             spriteBatch.DrawString(Game1.font, this.text, new Vector2(this.position.X, this.position.Y), Color.White);
-
         }
     }
 }

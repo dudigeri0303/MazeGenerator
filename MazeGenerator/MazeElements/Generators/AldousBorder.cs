@@ -65,6 +65,7 @@ namespace MazeGenerator.MazeElements.Generators
             {
                 Maze.getInstance().setGenerating(false);
                 Maze.getInstance().setGenerated(true);
+                this.reset();
             }
         }
 
@@ -94,8 +95,11 @@ namespace MazeGenerator.MazeElements.Generators
             var randJ = this.random.Next(0, Game1.cols);
 
             this.currentGrid = Maze.getInstance().getGridMap()[randI, randJ];
-        
         }
 
+        public string getName()
+        {
+            return "AldousBorder";
+        }
     }
 }
