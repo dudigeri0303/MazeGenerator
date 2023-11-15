@@ -38,9 +38,9 @@ namespace MazeGenerator
             }
         }
 
-        public override void drawGrid(SpriteBatch spriteBatch)
+        public override void draw(SpriteBatch spriteBatch)
         {
-            base.drawGrid(spriteBatch);
+            base.draw(spriteBatch);
             spriteBatch.DrawString(Game1.font, this.text, new Vector2(this.position.X, this.position.Y), Color.White);
 
         }

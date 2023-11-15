@@ -20,53 +20,52 @@ namespace MazeGenerator
             //List for the Grids near the currentgrid baes in the gridsAround list
             List<MazeGrid> neighbours = new List<MazeGrid>();
 
-            MazeGrid curretGrid = this.gridStack.Pop();
-            Tuple<int, int> indexes = curretGrid.getIndexes();
+            MazeGrid currentGrid = this.gridStack.Pop();
 
             //Adds the neighbours to the list (only if it is not visited)
-            foreach (var g in curretGrid.getGridsAround())
+            foreach (var g in currentGrid.getGridsAround())
             {
-                if (Maze.getInstance().getGridMap()[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2].getVisited() == false)
+                if (Maze.getInstance().getGridMap()[g.Item1 + currentGrid.getIndexes().Item1, g.Item2 + currentGrid.getIndexes().Item2].getVisited() == false)
                 {
-                    neighbours.Add(Maze.getInstance().getGridMap()[g.Item1 + indexes.Item1, g.Item2 + indexes.Item2]);
+                    neighbours.Add(Maze.getInstance().getGridMap()[g.Item1 + currentGrid.getIndexes().Item1, g.Item2 + currentGrid.getIndexes().Item2]);
                 }
             }
 
             //if there is unvisited neighbour
             if (neighbours.Count > 0)
             {
-                this.gridStack.Push(curretGrid);
-                MazeGrid previousGrid = curretGrid;
+                this.gridStack.Push(currentGrid);
+                MazeGrid previousGrid = currentGrid;
 
                 int randomIndex = this.random.Next(0, neighbours.Count);
-                curretGrid = neighbours[randomIndex];
-                curretGrid.setVisited(true);
-                curretGrid.setColor(Color.White);
+                currentGrid = neighbours[randomIndex];
+                currentGrid.setVisited(true);
+                currentGrid.setColor(Color.White);
 
-                previousGrid.addGridToConnectedGrids(curretGrid);
-                curretGrid.addGridToConnectedGrids(previousGrid);
+                previousGrid.addGridToConnectedGrids(currentGrid);
+                currentGrid.addGridToConnectedGrids(previousGrid);
 
                 //Inscreses the size of the correct grid to give the illusion of deleting the walll between them
-                if (previousGrid.getIndexes().Item1 > curretGrid.getIndexes().Item1)
+                if (previousGrid.getIndexes().Item1 > currentGrid.getIndexes().Item1)
                 {
-                    curretGrid.incraseWidth(Game1.mazeGridMargin);
+                    currentGrid.incraseWidth(Game1.mazeGridMargin);
                 }
 
-                else if (previousGrid.getIndexes().Item1 < curretGrid.getIndexes().Item1)
+                else if (previousGrid.getIndexes().Item1 < currentGrid.getIndexes().Item1)
                 {
                     previousGrid.incraseWidth(Game1.mazeGridMargin);
                 }
 
-                else if (previousGrid.getIndexes().Item2 > curretGrid.getIndexes().Item2)
+                else if (previousGrid.getIndexes().Item2 > currentGrid.getIndexes().Item2)
                 {
-                    curretGrid.incraseHeight(Game1.mazeGridMargin);
+                    currentGrid.incraseHeight(Game1.mazeGridMargin);
                 }
 
-                else if (previousGrid.getIndexes().Item2 < curretGrid.getIndexes().Item2)
+                else if (previousGrid.getIndexes().Item2 < currentGrid.getIndexes().Item2)
                 {
                     previousGrid.incraseHeight(Game1.mazeGridMargin);
                 }
-                this.gridStack.Push(curretGrid);
+                this.gridStack.Push(currentGrid);
             }
 
             if (this.gridStack.Count == 0)

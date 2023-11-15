@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MazeGenerator.MazeElements;
+using MazeGenerator.MazeElements.Generators;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -28,8 +30,7 @@ namespace MazeGenerator
         private MazeGrid startGrid;
         private MazeGrid finsihGrid;
 
-        private IGenerator generator;
-        private ISolver solver;
+        private AlgorithmChooser algorithmChooser;
 
         private Maze() 
         {
@@ -44,8 +45,7 @@ namespace MazeGenerator
             this.startGrid.setVisited(true);
             this.finsihGrid = this.gridMap[Game1.rows - 1, Game1.cols - 1];
 
-            this.generator = new IterativeRandomizedDFS(this.startGrid);
-            this.solver = new Tremaux(this.startGrid);
+            this.algorithmChooser = new AlgorithmChooser(this.startGrid);    
         }
 
 
@@ -164,13 +164,13 @@ namespace MazeGenerator
 
         public void drawMaze(SpriteBatch spriteBatch)
         {
-            this.backgroundGrid.drawGrid(spriteBatch);
+            this.backgroundGrid.draw(spriteBatch);
 
             for (int i = 0; i < Game1.rows; i++)
             {
                 for (int j = 0; j < Game1.cols; j++)
                 {
-                    this.gridMap[i, j].drawGrid(spriteBatch);
+                    this.gridMap[i, j].draw(spriteBatch);
                 }
             }
         }
@@ -180,11 +180,11 @@ namespace MazeGenerator
         {
             if (this.generating == true & this.generated == false)
             {
-                this.generator.generate();
+                this.algorithmChooser.getChosenGenerator().generate();
             }
             else if (this.solving == true & this.generated == true & this.solved == false) 
             {
-                this.solver.solve();
+                this.algorithmChooser.getChosenSolver().solve();
             }
         }
 
@@ -208,8 +208,8 @@ namespace MazeGenerator
             this.startGrid.setVisited(false);
             this.finsihGrid = this.gridMap[Game1.rows - 1, Game1.cols - 1];
 
-            this.generator.reset();
-            this.solver.reset();
+            this.algorithmChooser.getChosenGenerator().reset();
+            this.algorithmChooser.getChosenGenerator().reset();
         }
 
         public void checkSolved() 

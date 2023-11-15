@@ -1,5 +1,4 @@
-﻿using MazeGenerator.Gui;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,18 +9,17 @@ namespace MazeGenerator
         public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        private GenerateButton generateButton;
-        private SolveButton solveButton;
-        private ResetButton resetButton;
+        private Gui gui;
 
-        private MouseHandler mouseHandler;
 
         public static SpriteFont font;
+        public static MouseHandler mouseHandler = new MouseHandler();
+
         public static int mazeGridWidth = 18;
         public static int mazeGridHeight = 18;
         public static int mazeGridMargin = 4;
-        public static int rows = 30;
-        public static int cols = 30;
+        public static int rows = 10;
+        public static int cols = 10;
 
 
         public Game1()
@@ -47,13 +45,9 @@ namespace MazeGenerator
         protected override void LoadContent()
         {
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+            this.gui = new Gui();
+
             font = Content.Load<SpriteFont>("basicFont");
-
-            this.mouseHandler = new MouseHandler();
-
-            this.generateButton = new GenerateButton(720, 10, 100, 50, this.mouseHandler);
-            this.solveButton = new SolveButton(720, 100, 100, 50, this.mouseHandler);
-            this.resetButton = new ResetButton(720, 190, 100, 50, this.mouseHandler);
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,11 +55,9 @@ namespace MazeGenerator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            this.mouseHandler.setMouseStae();
+            mouseHandler.setMouseStae();
 
-            this.generateButton.act();
-            this.solveButton.act();
-            this.resetButton.act();
+            this.gui.updateAndAct();
 
             Maze.getInstance().checkSolved();
             Maze.getInstance().generateOrSolve();
@@ -81,9 +73,7 @@ namespace MazeGenerator
 
             Maze.getInstance().drawMaze(this.spriteBatch);
 
-            this.generateButton.drawGrid(this.spriteBatch);
-            this.solveButton.drawGrid(this.spriteBatch);
-            this.resetButton.drawGrid(spriteBatch);
+            this.gui.drawGui(this.spriteBatch);
 
             this.spriteBatch.End();
 
