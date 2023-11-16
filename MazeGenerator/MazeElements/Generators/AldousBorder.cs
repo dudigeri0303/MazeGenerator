@@ -39,26 +39,7 @@ namespace MazeGenerator.MazeElements.Generators
                     previousGrid.addGridToConnectedGrids(currentGrid);
                     currentGrid.addGridToConnectedGrids(previousGrid);
 
-
-                    if (previousGrid.getIndexes().Item1 > currentGrid.getIndexes().Item1)
-                    {
-                        currentGrid.incraseWidth(Game1.mazeGridMargin);
-                    }
-
-                    else if (previousGrid.getIndexes().Item1 < currentGrid.getIndexes().Item1)
-                    {
-                        previousGrid.incraseWidth(Game1.mazeGridMargin);
-                    }
-
-                    else if (previousGrid.getIndexes().Item2 > currentGrid.getIndexes().Item2)
-                    {
-                        currentGrid.incraseHeight(Game1.mazeGridMargin);
-                    }
-
-                    else if (previousGrid.getIndexes().Item2 < currentGrid.getIndexes().Item2)
-                    {
-                        previousGrid.incraseHeight(Game1.mazeGridMargin);
-                    }
+                    Maze.getInstance().mergeGrids(previousGrid, currentGrid);  
                 }   
             }
             else 

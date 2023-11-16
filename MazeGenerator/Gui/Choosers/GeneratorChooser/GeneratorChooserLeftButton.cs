@@ -19,6 +19,7 @@ namespace MazeGenerator
 
         protected override void onClick()
         {
+
             this.algorithmChooser.decraseGeneratorIndexerAndChangeGenerator();
             this.generatorChooser.updateText(this.algorithmChooser);
         }

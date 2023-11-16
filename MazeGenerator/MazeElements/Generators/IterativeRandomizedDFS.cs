@@ -45,26 +45,7 @@ namespace MazeGenerator
                 previousGrid.addGridToConnectedGrids(currentGrid);
                 currentGrid.addGridToConnectedGrids(previousGrid);
 
-                //Inscreses the size of the correct grid to give the illusion of deleting the walll between them
-                if (previousGrid.getIndexes().Item1 > currentGrid.getIndexes().Item1)
-                {
-                    currentGrid.incraseWidth(Game1.mazeGridMargin);
-                }
-
-                else if (previousGrid.getIndexes().Item1 < currentGrid.getIndexes().Item1)
-                {
-                    previousGrid.incraseWidth(Game1.mazeGridMargin);
-                }
-
-                else if (previousGrid.getIndexes().Item2 > currentGrid.getIndexes().Item2)
-                {
-                    currentGrid.incraseHeight(Game1.mazeGridMargin);
-                }
-
-                else if (previousGrid.getIndexes().Item2 < currentGrid.getIndexes().Item2)
-                {
-                    previousGrid.incraseHeight(Game1.mazeGridMargin);
-                }
+                Maze.getInstance().mergeGrids(previousGrid, currentGrid);
                 this.gridStack.Push(currentGrid);
             }
 

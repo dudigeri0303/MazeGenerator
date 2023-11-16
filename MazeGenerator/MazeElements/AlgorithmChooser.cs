@@ -32,6 +32,7 @@ namespace MazeGenerator
             //Generators
             this.generatorList = new List<IGenerator>()
             {
+                new RandomizedPrim(startGrid),
                 new IterativeRandomizedDFS(startGrid),
                 new AldousBorder(startGrid)
             };

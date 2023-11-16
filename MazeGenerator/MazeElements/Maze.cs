@@ -3,6 +3,8 @@ using MazeGenerator.MazeElements.Generators;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MazeGenerator
 {
@@ -25,6 +27,9 @@ namespace MazeGenerator
         private bool solved = false;
 
         private MazeGrid[,] gridMap;
+
+        private List<Wall> wallList;
+
         private BackgroundGrid backgroundGrid;
 
         private MazeGrid startGrid;
@@ -39,6 +44,10 @@ namespace MazeGenerator
 
             this.gridMap = new MazeGrid[Game1.rows, Game1.cols];
             this.fillGridMap();
+
+            this.wallList = new List<Wall>();
+            this.fillWallList();
+            this.removeDupliavtedWalls();
 
             this.startGrid = this.gridMap[0, 0];
             this.startGrid.setColor(Color.Red);
@@ -106,6 +115,11 @@ namespace MazeGenerator
         public bool getSolving() 
         {
             return this.solving;
+        }
+
+        public List<Wall> getWallList() 
+        {
+            return this.wallList;
         }
 
 
@@ -176,6 +190,84 @@ namespace MazeGenerator
             } 
         }
 
+        private void fillWallList() 
+        {
+            for (int i = 0; i < Game1.rows; i++)
+            {
+                for (int j = 0; j < Game1.cols; j++)
+                {
+                    var currentGrid = this.gridMap[i, j];
+                    List<MazeGrid> neighbours = new List<MazeGrid>();
+
+                    foreach (var g in currentGrid.getGridsAround())
+                    {
+                        neighbours.Add(this.gridMap[g.Item1 + currentGrid.getIndexes().Item1, g.Item2 + currentGrid.getIndexes().Item2]);
+                    }
+                    foreach (var n in neighbours) 
+                    {
+                        this.wallList.Add(new Wall(currentGrid, n));
+                    }
+                }
+            }
+        }
+
+        private void removeDupliavtedWalls()
+        {
+            var newWallList = new List<Wall>();
+            for (int i = 0; i < this.wallList.Count; i++)
+            {
+                for (int j = 0; j < this.wallList.Count; j++)
+                {
+                    if (this.wallList[i] != null & this.wallList[j] != null & i != j) 
+                    {
+                        if ((this.wallList[i].getGrid1() == this.wallList[j].getGrid2() & this.wallList[i].getGrid2() == this.wallList[j].getGrid1()))
+                        {
+                            this.wallList[j] = null;
+                        }
+                    }
+                }
+            }
+            
+            for (int i = 0;i < this.wallList.Count;i++)
+            {
+                if (this.wallList[i] != null) 
+                {
+                    newWallList.Add(this.wallList[i]);
+                }
+            }
+            this.wallList = newWallList;
+
+            foreach (Wall wall in this.wallList) 
+            {
+                Debug.WriteLine($"{wall.getGrid1().getIndexes().Item1},{wall.getGrid1().getIndexes().Item2} +++ {wall.getGrid2().getIndexes().Item1},{wall.getGrid2().getIndexes().Item2}");
+            }
+        }
+
+        //grid1 = previousGrid, grid2 = currentGrid
+        public void mergeGrids(MazeGrid grid1, MazeGrid grid2) 
+        {
+            if (grid1.getIndexes().Item1 > grid2.getIndexes().Item1)
+            {
+                grid2.incraseWidth(Game1.mazeGridMargin);
+            }
+
+            else if (grid1.getIndexes().Item1 < grid2.getIndexes().Item1)
+            {
+                grid1.incraseWidth(Game1.mazeGridMargin);
+            }
+
+            else if (grid1.getIndexes().Item2 > grid2.getIndexes().Item2)
+            {
+                grid2.incraseHeight(Game1.mazeGridMargin);
+            }
+
+            else if (grid1.getIndexes().Item2 < grid2.getIndexes().Item2)
+            {
+                grid1.incraseHeight(Game1.mazeGridMargin);
+            }
+
+        }
+
         public void drawMaze(SpriteBatch spriteBatch)
         {
             this.backgroundGrid.draw(spriteBatch);
@@ -223,7 +315,7 @@ namespace MazeGenerator
             this.finsihGrid = this.gridMap[Game1.rows - 1, Game1.cols - 1];
 
             this.algorithmChooser.getChosenGenerator().reset();
-            this.algorithmChooser.getChosenGenerator().reset();
+            this.algorithmChooser.getChosenSolver().reset();
         }
 
         public void checkSolved() 
