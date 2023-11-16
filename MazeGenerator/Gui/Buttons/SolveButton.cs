@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MazeGenerator
 {
     internal class SolveButton : Button
@@ -16,11 +10,17 @@ namespace MazeGenerator
 
         protected override void onClick()
         {
-            if (Maze.getInstance().getGenerated())
+            if (Maze.getInstance().getSolved())
+            {
+                Maze.getInstance().resetForReSolve();
+                Maze.getInstance().setSolving(true);
+
+            }
+
+            else if (Maze.getInstance().getGenerated())
             {
                 Maze.getInstance().setSolving(true);
             }
-            
-        }
+        }     
     }
 }

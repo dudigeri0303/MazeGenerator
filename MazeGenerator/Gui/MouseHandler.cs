@@ -6,19 +6,26 @@ namespace MazeGenerator
     public class MouseHandler
     {
         private Point mousePositione;
-        private bool clicked;
-        private bool previousCilcked;
-        
+        private bool leftClicked;
+        private bool previousLeftCilcked;
+        private bool rightClicked;
+        private bool previousRightCilcked;
+
 
         public MouseHandler() 
         {
-            this.clicked = false;
-            this.previousCilcked = false;
+            this.leftClicked = false;
+            this.previousLeftCilcked = false;
         }
 
-        public bool getClicked() 
+        public bool getLeftClicked() 
         {
-            return this.clicked;
+            return this.leftClicked;
+        }
+
+        public bool getRightClicked()
+        {
+            return this.rightClicked;
         }
 
         public void setMouseStae() 
@@ -26,20 +33,33 @@ namespace MazeGenerator
             var mouseState = Mouse.GetState();
             this.mousePositione = new Point(mouseState.X, mouseState.Y);
 
-            if (mouseState.LeftButton == ButtonState.Pressed & !this.previousCilcked)
+            if (mouseState.LeftButton == ButtonState.Pressed & !this.previousLeftCilcked)
             {
-                this.clicked = true;
-                this.previousCilcked = true;
+                this.leftClicked = true;
+                this.previousLeftCilcked = true;
             }
-            else { this.clicked = false; }
+            else { this.leftClicked = false; }
 
 
             if (mouseState.LeftButton == ButtonState.Released)
             {
-                this.clicked = false; 
-                this.previousCilcked= false;
+                this.leftClicked = false; 
+                this.previousLeftCilcked= false;
             }
-            
+
+            if (mouseState.RightButton == ButtonState.Pressed & !this.previousRightCilcked)
+            {
+                this.rightClicked = true;
+                this.previousRightCilcked = true;
+            }
+            else { this.rightClicked = false; }
+
+
+            if (mouseState.RightButton == ButtonState.Released)
+            {
+                this.rightClicked = false;
+                this.previousRightCilcked = false;
+            }
         }
 
         public Point getMousePosition() 

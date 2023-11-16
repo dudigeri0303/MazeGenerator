@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace MazeGenerator
@@ -68,7 +67,6 @@ namespace MazeGenerator
                     grid2.addGridToConnectedGrids(grid1);
                 }
                 this.wallList.Remove(choosenWall);
-                Debug.WriteLine(this.wallList.Count);
             }
             else 
             {

@@ -1,9 +1,5 @@
 ﻿using MazeGenerator.MazeElements.Generators;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeGenerator
 {
@@ -42,7 +38,9 @@ namespace MazeGenerator
             //Solvers
             this.solverList = new List<ISolver>()
             {
-                new Tremaux(startGrid)
+                new Tremaux(startGrid),
+                new RightWallFollower(startGrid),
+                new LeftWallFollower(startGrid)
             };
 
 
@@ -59,6 +57,16 @@ namespace MazeGenerator
         public ISolver getChosenSolver() 
         {
             return this.choosenSolver;
+        }
+
+        public List<ISolver> getSolvers() 
+        {
+            return this.solverList;
+        }
+
+        public List<IGenerator> getGeneratos() 
+        {
+            return this.generatorList;
         }
 
         public void incraseGeneratorIndexerAndChangeGenerator() 
@@ -82,8 +90,7 @@ namespace MazeGenerator
                     this.generatorIndexer--;
                     this.choosenGenerator = this.generatorList[this.generatorIndexer];
                 }
-            }
-            
+            } 
         }
 
         public void incraseSolverIndexerAndChangeSolver()
@@ -107,6 +114,14 @@ namespace MazeGenerator
                     this.solverIndexer--;
                     this.choosenSolver = this.solverList[this.solverIndexer];
                 }
+            }
+        }
+
+        public void setStartGridForSolvers() 
+        {
+            foreach (var solver in this.solverList) 
+            {
+                solver.setStartGrid(Maze.getInstance().getSolveStartGrid());
             }
         }
     }

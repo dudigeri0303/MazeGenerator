@@ -1,4 +1,5 @@
-﻿namespace MazeGenerator
+﻿
+namespace MazeGenerator
 {
     internal class ResetButton : Button
     {

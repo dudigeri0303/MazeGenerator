@@ -1,23 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
 namespace MazeGenerator
 {
-    public class MazeGrid : GridLike
+    public class MazeGrid : GridLike, IClickable
     {
         private bool visited = false;
         private int visitedCount = 0;
 
         private Tuple<int, int> indexes;
         private Tuple<int, int>[] gridsAround;
-        private List<MazeGrid> connectedGrids; 
+        private List<MazeGrid> connectedGrids;
+        private List<MazeGrid> connectedGridsBackup;
 
-        public MazeGrid(int x, int y, int widht, int height, int i, int j) : base(x, y, widht, height)
+        private MouseHandler mouseHandler;
+
+        public MazeGrid(int x, int y, int widht, int height, int i, int j, MouseHandler mouseHandler) : base(x, y, widht, height)
         {
             this.indexes = Tuple.Create(i, j);
             this.connectedGrids = new List<MazeGrid>();
+            this.connectedGridsBackup = new List<MazeGrid>();
+            this.mouseHandler = mouseHandler;
         }
 
         public Tuple<int, int>[] getGridsAround() 
@@ -47,6 +51,7 @@ namespace MazeGenerator
         public void addGridToConnectedGrids(MazeGrid grid) 
         {
             this.connectedGrids.Add(grid);
+            this.connectedGridsBackup.Add(grid);
         }
 
         public List<MazeGrid> getConnectedGrids() 
@@ -74,6 +79,37 @@ namespace MazeGenerator
             this.visited = false;
             this.visitedCount = 0;
             this.connectedGrids.Clear();
+            this.connectedGridsBackup.Clear();
+        }
+
+        public void resetForReSolve() 
+        {
+            this.color = Color.White;
+            this.visited = false;
+            this.visitedCount = 0;
+
+            this.connectedGrids = new List<MazeGrid>();
+
+            foreach(var grid in this.connectedGridsBackup) 
+            {
+                this.connectedGrids.Add(grid);
+            }
+        }
+
+        public void click()
+        {
+            if (this.rect.Contains(this.mouseHandler.getMousePosition()) & this.mouseHandler.getLeftClicked())
+            {
+                Maze.getInstance().getSolveStartGrid().setColor(Color.White);
+                Maze.getInstance().setSolveStartGrig(this);
+                Maze.getInstance().getAlgorithmChooser().setStartGridForSolvers();
+            }
+            else if (this.rect.Contains(this.mouseHandler.getMousePosition()) & this.mouseHandler.getRightClicked())
+            {
+                Maze.getInstance().getSolveFinishGrid().setColor(Color.White);
+
+                Maze.getInstance().setSolveFinishGrid(this);
+            }
         }
     }
 }

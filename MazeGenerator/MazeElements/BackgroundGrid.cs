@@ -1,4 +1,5 @@
-﻿namespace MazeGenerator
+﻿
+namespace MazeGenerator
 {
     public class BackgroundGrid : GridLike
     {

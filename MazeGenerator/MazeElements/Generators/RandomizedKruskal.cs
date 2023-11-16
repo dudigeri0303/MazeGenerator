@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace MazeGenerator
@@ -81,7 +79,6 @@ namespace MazeGenerator
                             }
                         }
 
-
                         this.gridSetList.Remove(grid2Set);
                         this.gridSetList.Remove(grid1Set);
                         this.gridSetList.Add(gridJoinedSet);
@@ -135,7 +132,5 @@ namespace MazeGenerator
         {
             return "RndKruskal";
         }
-
-        
     }
 }

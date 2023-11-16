@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MazeGenerator
 {
-    public abstract class Button : GridLike
+    public abstract class Button : GridLike, IClickable
     {
 
         protected MouseHandler mouseHandler;
@@ -16,7 +16,7 @@ namespace MazeGenerator
 
         protected bool isClicked() 
         {
-            if (this.rect.Contains(this.mouseHandler.getMousePosition()) & this.mouseHandler.getClicked())
+            if (this.rect.Contains(this.mouseHandler.getMousePosition()) & this.mouseHandler.getLeftClicked())
             {
                 return true;
             }
@@ -38,12 +38,17 @@ namespace MazeGenerator
 
         protected abstract void onClick();
 
+        public void click()
+        {
+            this.onClick();
+        }
+
         public void act() 
         {
             this.colorChangeBasedOnMousePos();
             if (this.isClicked()) 
             {
-                this.onClick();
+                this.click();
             }
         }
 
@@ -52,5 +57,7 @@ namespace MazeGenerator
             base.draw(spriteBatch);
             spriteBatch.DrawString(Game1.font, this.text, new Vector2(this.position.X, this.position.Y), Color.White);
         }
+
+        
     }
 }
