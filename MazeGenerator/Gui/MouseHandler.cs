@@ -7,11 +7,13 @@ namespace MazeGenerator
     {
         private Point mousePositione;
         private bool clicked;
+        private bool previousCilcked;
         
 
         public MouseHandler() 
         {
-
+            this.clicked = false;
+            this.previousCilcked = false;
         }
 
         public bool getClicked() 
@@ -24,11 +26,19 @@ namespace MazeGenerator
             var mouseState = Mouse.GetState();
             this.mousePositione = new Point(mouseState.X, mouseState.Y);
 
-            if (mouseState.LeftButton == ButtonState.Pressed) 
+            if (mouseState.LeftButton == ButtonState.Pressed & !this.previousCilcked)
             {
                 this.clicked = true;
+                this.previousCilcked = true;
             }
             else { this.clicked = false; }
+
+
+            if (mouseState.LeftButton == ButtonState.Released)
+            {
+                this.clicked = false; 
+                this.previousCilcked= false;
+            }
             
         }
 

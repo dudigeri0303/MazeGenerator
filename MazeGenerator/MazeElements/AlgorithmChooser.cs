@@ -32,8 +32,9 @@ namespace MazeGenerator
             //Generators
             this.generatorList = new List<IGenerator>()
             {
-                new RandomizedPrim(startGrid),
                 new IterativeRandomizedDFS(startGrid),
+                new RandomizedPrim(startGrid),
+                new RandomizedKruskal(),
                 new AldousBorder(startGrid)
             };
 
@@ -72,7 +73,6 @@ namespace MazeGenerator
             }
             
         }
-
         public void decraseGeneratorIndexerAndChangeGenerator()
         {
             if (!Maze.getInstance().getGenerating()) 

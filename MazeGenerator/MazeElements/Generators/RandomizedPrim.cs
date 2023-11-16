@@ -7,30 +7,30 @@ namespace MazeGenerator
 {
     public class RandomizedPrim : IGenerator
     {
-        private List<Wall> wallist;
+        private List<Wall> wallList;
         private MazeGrid startGrid;
         private Random random;
 
         public RandomizedPrim(MazeGrid startGrid) 
         {
-            this.wallist = null;
+            this.wallList = null;
             this.startGrid = startGrid;
             this.random = new Random();
         } 
         public void generate()
         {
-            if (this.wallist == null) 
+            if (this.wallList == null) 
             {
-                this.wallist = new List<Wall> ();
+                this.wallList = new List<Wall> ();
                 this.startGrid.setColor(Color.White);
                 this.startGrid.setVisited(true);
                 this.addWalls(this.startGrid);
             }
 
-            if (this.wallist.Count > 0)
+            if (this.wallList.Count > 0)
             {
-                int randomWallIndex = this.random.Next(0, this.wallist.Count);
-                Wall choosenWall = this.wallist[randomWallIndex];
+                int randomWallIndex = this.random.Next(0, this.wallList.Count);
+                Wall choosenWall = this.wallList[randomWallIndex];
 
                 if (choosenWall.getGrid1().getVisited() & !choosenWall.getGrid2().getVisited())
                 {
@@ -67,8 +67,8 @@ namespace MazeGenerator
                     grid1.addGridToConnectedGrids(grid2);
                     grid2.addGridToConnectedGrids(grid1);
                 }
-                this.wallist.Remove(choosenWall);
-                Debug.WriteLine(this.wallist.Count);
+                this.wallList.Remove(choosenWall);
+                Debug.WriteLine(this.wallList.Count);
             }
             else 
             {
@@ -76,16 +76,15 @@ namespace MazeGenerator
                 Maze.getInstance().setGenerated(true);
                 this.reset();
             }
-            
         }
 
         private void addWalls(MazeGrid grid) 
         {
             foreach (Wall wall in Maze.getInstance().getWallList())
             {
-                if ((wall.getGrid1() == grid | wall.getGrid2() == grid) & !this.wallist.Contains(wall))
+                if ((wall.getGrid1() == grid | wall.getGrid2() == grid) & !this.wallList.Contains(wall))
                 {
-                    this.wallist.Add(wall);
+                    this.wallList.Add(wall);
                 }
             }
         }
@@ -97,7 +96,7 @@ namespace MazeGenerator
 
         public void reset()
         {
-            this.wallist = null;
+            this.wallList = null;
             this.startGrid = Maze.getInstance().getStartGrid();
         }
     }
