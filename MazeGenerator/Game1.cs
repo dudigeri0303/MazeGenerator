@@ -15,13 +15,11 @@ namespace MazeGenerator
         public static SpriteFont font;
         public static MouseHandler mouseHandler = new MouseHandler();
 
-        public static int mazeGridWidth = 25;
-        public static int mazeGridHeight = 25;
+        public static int mazeGridWidth = 17;
+        public static int mazeGridHeight = 17;
         public static int mazeGridMargin = 5;
-        public static int rows = 15;
-        public static int cols = 15;
-        public static float scaledTime = 1;
-
+        public static int rows = 30;
+        public static int cols = 30;
 
         public Game1()
         {

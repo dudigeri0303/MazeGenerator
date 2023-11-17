@@ -76,6 +76,16 @@ namespace MazeGenerator
             }
         }
 
+        public void reset()
+        {
+            this.wallList = null;
+            this.startGrid = Maze.getInstance().getStartGrid();
+        }
+        public string getName()
+        {
+            return "RndPrim's";
+        }
+
         private void addWalls(MazeGrid grid) 
         {
             foreach (Wall wall in Maze.getInstance().getWallList())
@@ -85,17 +95,6 @@ namespace MazeGenerator
                     this.wallList.Add(wall);
                 }
             }
-        }
-
-        public string getName()
-        {
-            return "RndPrim's";
-        }
-
-        public void reset()
-        {
-            this.wallList = null;
-            this.startGrid = Maze.getInstance().getStartGrid();
         }
     }
 }

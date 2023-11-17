@@ -63,8 +63,6 @@ namespace MazeGenerator
             this.gridStack.Push(Maze.getInstance().getStartGrid());
         }
 
-        public Stack<MazeGrid> GetGridStack() { return this.gridStack; }
-
         public string getName()
         {
             return "IterativeRndDFS";

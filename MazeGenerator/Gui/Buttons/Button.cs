@@ -5,7 +5,6 @@ namespace MazeGenerator
 {
     public abstract class Button : GridLike, IClickable
     {
-
         protected MouseHandler mouseHandler;
         protected string text;
 

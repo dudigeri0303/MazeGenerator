@@ -101,6 +101,10 @@ namespace MazeGenerator
                 this.reset();
             }
         }
+        public string getName()
+        {
+            return "RndKruskal";
+        }
 
         public void reset()
         {
@@ -126,11 +130,6 @@ namespace MazeGenerator
                     this.gridSetList.Add(new List<MazeGrid>() { Maze.getInstance().getGridMap()[i, j] });
                 }
             }
-        }
-
-        public string getName()
-        {
-            return "RndKruskal";
         }
     }
 }

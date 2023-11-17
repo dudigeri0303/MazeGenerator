@@ -44,7 +44,7 @@ namespace MazeGenerator
 
             this.wallList = new List<Wall>();
             this.fillWallList();
-            this.removeDupliavtedWalls();
+            this.removeDuplicatedWalls();
 
             this.startGrid = this.gridMap[0, 0];
             this.solveStartGrid = this.gridMap[0, 0];
@@ -231,7 +231,7 @@ namespace MazeGenerator
             }
         }
 
-        private void removeDupliavtedWalls()
+        private void removeDuplicatedWalls()
         {
             var newWallList = new List<Wall>();
             for (int i = 0; i < this.wallList.Count; i++)

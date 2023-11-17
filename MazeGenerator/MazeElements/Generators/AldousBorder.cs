@@ -70,14 +70,6 @@ namespace MazeGenerator.MazeElements.Generators
             return true;
         }
 
-        private void chooseRandomMazeGrid() 
-        {
-            var randI = this.random.Next(0, Game1.rows);
-            var randJ = this.random.Next(0, Game1.cols);
-
-            this.currentGrid = Maze.getInstance().getGridMap()[randI, randJ];
-        }
-
         public string getName()
         {
             return "AldousBorder";

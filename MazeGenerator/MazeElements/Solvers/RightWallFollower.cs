@@ -19,12 +19,6 @@ namespace MazeGenerator
             this.solveStack.Push(this.startGrid);
         }
 
-        public void setStartGrid(MazeGrid grid)
-        {
-            this.startGrid = grid;
-            this.reset();
-        }
-
         public void solve()
         {
             MazeGrid currentGrid = this.solveStack.Pop();
@@ -93,7 +87,6 @@ namespace MazeGenerator
             }
         }
 
-
         public void reset()
         {
             this.solveStack.Clear();
@@ -103,6 +96,11 @@ namespace MazeGenerator
         public string getName()
         {
             return "RightWallFollower";
+        }
+        public void setStartGrid(MazeGrid grid)
+        {
+            this.startGrid = grid;
+            this.reset();
         }
     }
 }
