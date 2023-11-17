@@ -1,5 +1,10 @@
+2023.11.17:  
+New generating and solving algorithms implemented.  
+Now you can choose where the solving starts and ends (with a left and right click on the preferred grid).  
+It's not needed to reset the maze anymore to solve it again.  
+
 2023.11.15:  
-Generating and solving algorithm chooser added to the gui. New generating algorithm implemented.  
+Generating and solving algorithm chooser added to the gui. New generating algorithms implemented.  
 Some refactoring.  
 <img src="ScreenShots/Updated2.png" width="550" height="350">  
 
